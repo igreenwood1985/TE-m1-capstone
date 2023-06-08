@@ -21,4 +21,16 @@ public class Menu {
 		System.out.println("***************************");
 		System.out.println();
 	}
+
+	public void showMainMenu(){
+		System.out.println("(1) Show Inventory");
+		System.out.println("(2) Make Sale");
+		System.out.println("(3) Quit");
+	}
+
+	public String getUserCommand(){
+		Scanner userInput = new Scanner(System.in);
+		String userCommand = userInput.nextLine();
+		return userCommand;
+	}
 }
