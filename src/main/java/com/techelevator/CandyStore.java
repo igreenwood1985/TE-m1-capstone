@@ -58,11 +58,16 @@ public class CandyStore {
             return item;
         }
     }
-
-
-    public Map<String, CandyStoreItem> buildInventory (String inventoryFileName) throws FileNotFoundException {
+    public List<String> loadFile (String inventoryFileName) throws FileNotFoundException {
         InventoryFileReader inventoryFileScan = new InventoryFileReader(inventoryFileName);
         List<String> inventoryStrings = inventoryFileScan.readFile();
+        return inventoryStrings;
+    }
+
+
+
+    public Map<String, CandyStoreItem> buildInventory (List<String> inventoryStrings) {
+
         Map<String, CandyStoreItem> candyListMap = new HashMap<String, CandyStoreItem>();
         // parser method goes here. it'll build the map.\
         for (String inventoryItem : inventoryStrings){
