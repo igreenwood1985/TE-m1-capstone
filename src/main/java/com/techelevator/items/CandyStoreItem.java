@@ -32,12 +32,20 @@ public abstract class CandyStoreItem {
         }
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
 
     public double getPrice() {
         return price;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public boolean isIndividuallyWrapped() {

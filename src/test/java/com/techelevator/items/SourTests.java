@@ -9,7 +9,7 @@ public class SourTests {
 
     @Before
     public void setup() {
-        this.target = new Sour("ValidTestSour", 10.0, true);
+        this.target = new Sour("SR","ValidTestSour", 10.0, true);
     }
 
     @Test

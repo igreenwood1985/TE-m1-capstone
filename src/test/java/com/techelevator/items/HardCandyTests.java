@@ -8,7 +8,7 @@ public class HardCandyTests {
     private HardCandy target;
     @Before
     public void setup() {
-        this.target = new HardCandy("ValidTestHardCandy", 10.0, true);
+        this.target = new HardCandy("HC","ValidTestHardCandy", 10.0, true);
     }
 
     @Test
