@@ -23,7 +23,7 @@ You’ve been asked to develop a cash register application for the Silver Shamro
 
 4. When the Main Menu is being shown and the user selects `(1) Show Inventory` the Inventory Items should be shown along with the quantity remaining. The Main Menu should then be shown again so the user can make a new choice.
 
-    **<span style="text-decoration:underline;">SAMPLE INVENTORY DISPLPAY</span>**
+    **<span style="text-decoration:underline;">SAMPLE INVENTORY DISPLAY</span>**
 
     The items in the file will be different.
 
@@ -114,15 +114,15 @@ You’ve been asked to develop a cash register application for the Silver Shamro
       - The Log.txt file should persist (appended to, not overwritten) when the program starts.
       - The audit entry should include the date and time, action taken, the customer's balance before that action and and new customer balance after the action was completed
       - Actions Taken may be:
-        - MONEY RECIEVED
+        - MONEY RECEIVED
         - CHANGE GIVEN
         - NUMBER_ORDERED  PRODUCT_NAME  PRODUCT_CODE
 
       - The audit entries should be in the format:
 
         ```
-        09/28/2021 12:00:00 PM MONEY RECIEVED: $50.00 $50.00
-        09/28/2021 12:00:15 PM MONEY RECIEVED: $100.00 $150.00
+        09/28/2021 12:00:00 PM MONEY RECEIVED: $50.00 $50.00
+        09/28/2021 12:00:15 PM MONEY RECEIVED: $100.00 $150.00
         09/28/2021 12:00:20 PM 10 Chocolate Bites C1 $11.00 $139.00
         09/28/2021 12:01:25 PM 22 Strawberry Straw L2 $27.50 $111.50
         09/28/2021 12:03:12 PM 2 Pickle Suckers H1 $2.90 $108.60
