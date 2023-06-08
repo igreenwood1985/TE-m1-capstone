@@ -5,6 +5,7 @@
   - Use Git to track changes to this document. 
 
 - What are the slices gonna be?
+  - BRICK BY BRICK. One requirement at a time, and refactor as we go when necessary.
 
 ## Data Model Classes
 ### CandyStoreItem 
