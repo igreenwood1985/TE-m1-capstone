@@ -1,7 +1,7 @@
 package com.techelevator.items;
 
 public class Licorice extends CandyStoreItem {
-    public Licorice(String iD, String name, double price, boolean isIndividuallyWrapped){
-        super(iD, name, price, isIndividuallyWrapped);
+    public Licorice(String iD, String name, double price, boolean isIndividuallyWrapped, String type){
+        super(iD, name, price, isIndividuallyWrapped, type);
     }
 }

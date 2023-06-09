@@ -54,7 +54,8 @@ public class Menu {
 			amountInteger = Integer.parseInt(amountString);
 		} catch (NumberFormatException e1){
 			System.out.println("Enter the dollar amount as a whole number.");
-			return;
+			e1 = null;
+			//return;
 		}
 		try {
 			store.addMoneyToCustomerBalance(amountInteger);
@@ -67,6 +68,7 @@ public class Menu {
 				Thread.sleep(500);
 			} catch (InterruptedException e3){
 				System.out.println("Interrupted during pause! What the heck?! Quitting.");
+				e3 = null;
 			}
 		}
 	}
@@ -127,7 +129,8 @@ public class Menu {
 			itemAmount = Integer.parseInt(getUserCommand());
 		} catch (NumberFormatException n){
 			System.out.println("Enter a whole number.");
-			return;
+			n = null;
+			//return;
 		}
 		try {
 			store.updateCart(itemId, itemAmount);
@@ -138,7 +141,19 @@ public class Menu {
 		}
 	}
 
-	public void printReceipt(List<CandyStoreItem> cart){
+	public void completeSale(CandyStore store){
+		List<CandyStoreItem> cart = store.getCart();
+		for (CandyStoreItem purchasedItem : cart){
+			String qty = String.valueOf(purchasedItem.getQuantity());
+			String name = purchasedItem.getName();
+			String type = purchasedItem.getType();
+			double individualPricePerUnit = purchasedItem.getPrice();
+			double totalPricePerUnit = purchasedItem.getQuantity() * purchasedItem.getPrice();
+			System.out.printf("%-5s %-20s %-10s $%1.2f $%1.2f \n", qty, name, type,  individualPricePerUnit, totalPricePerUnit, totalPricePerUnit);
+		}
+		System.out.printf("Total: $%1.2f \n", store.calculateTotalSalePrice());
+		System.out.printf("Change: $%1.2f \n", store.calculateChangeAmount());
+
 
 	}
 }

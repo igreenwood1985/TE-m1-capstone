@@ -11,16 +11,18 @@ public abstract class CandyStoreItem {
     private double price;
     private int quantity;
     private boolean isIndividuallyWrapped;
+    private String type;
 
-    public CandyStoreItem(String id, String name, double price, boolean isIndividuallyWrapped ){
+    public CandyStoreItem(String id, String name, double price, boolean isIndividuallyWrapped, String type ){
         // Defaults quantity to 100.
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = 100;
         this.isIndividuallyWrapped = isIndividuallyWrapped;
+        this.type = type;
     }
-    public CandyStoreItem(String id, String name, double price, int quantity, boolean isIndividuallyWrapped ) throws IllegalArgumentException {
+    public CandyStoreItem(String id, String name, double price, int quantity, boolean isIndividuallyWrapped, String type ) throws IllegalArgumentException {
         if (quantity > 100 || quantity < 0){
             throw new IllegalArgumentException("Invalid quantity. Value must be between 0 and 100.");
         } else {
@@ -29,6 +31,7 @@ public abstract class CandyStoreItem {
             this.price = price;
             this.quantity = quantity;
             this.isIndividuallyWrapped = isIndividuallyWrapped;
+            this.type = type;
         }
     }
 
@@ -59,6 +62,11 @@ public abstract class CandyStoreItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    public String getType() {
+        return type;
+    }
+
+
 
     // Could override the toString method, but that seems... wrong.
     // Should do all our formatting with printf, or none of it.

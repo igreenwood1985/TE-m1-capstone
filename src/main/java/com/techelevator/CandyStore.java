@@ -11,10 +11,21 @@ import java.util.*;
     contain all the "work"
  */
 public class CandyStore {
+    private static final double NICKEL = .05;
+    private static final double DIME = .10;
+    private static final double QUARTER = .25;
+    private static final double ONE = 1.0;
+    private static final double FIVE = 5.0;
+    private static final double TEN = 10.0;
+    private static final double TWENTY = 20.0;
     private static final String CHOCOLATE_CODE = "CH";
+    private static final String CHOCOLATE_TYPE_STRING = "Chocolate Confectionery";
     private static final String SOUR_CODE = "SR";
+    private static final String SOUR_TYPE_STRING = "Sour Flavored Candies";
     private static final String HARD_CANDY_CODE = "HC";
+    private static final String HARD_CANDY_TYPE_STRING = "Hard Tack Confectionery";
     private static final String LICORICE_CODE = "LI";
+    private static final String LICORICE_TYPE_STRING = "Licorice and Jellies";
     private double currentCustomerBalance = 0.0;
     /*
     BRJ - 6/8, POST 5PM:
@@ -82,13 +93,13 @@ public class CandyStore {
             }
 
             if (itemPieces[0].equals(CHOCOLATE_CODE)) {
-                item = new Chocolate(iD, name, price, isWrapped);
+                item = new Chocolate(iD, name, price, isWrapped, CHOCOLATE_TYPE_STRING);
             } else if (itemPieces[0].equals(SOUR_CODE)) {
-                item = new Sour(iD, name, price, isWrapped);
+                item = new Sour(iD, name, price, isWrapped, SOUR_TYPE_STRING);
             } else if (itemPieces[0].equals(HARD_CANDY_CODE)) {
-                item = new HardCandy(iD, name, price, isWrapped);
+                item = new HardCandy(iD, name, price, isWrapped, HARD_CANDY_TYPE_STRING);
             } else if (itemPieces[0].equals(LICORICE_CODE)) {
-                item = new Licorice(iD, name, price, isWrapped);
+                item = new Licorice(iD, name, price, isWrapped, LICORICE_TYPE_STRING);
             }
 
             return item;
@@ -136,7 +147,6 @@ public class CandyStore {
         if (itemToPurchase == null){
             throw new IllegalArgumentException("Enter an ID.");
         }
-
         CandyStoreItem item = this.candyStoreItemInventory.get(itemToPurchase);
         if (item == null ) {
             throw new IllegalArgumentException("Item does not exist, try again. \n");
@@ -152,9 +162,11 @@ public class CandyStore {
                 throw new IllegalArgumentException("Insufficient funds.");
             } else {
                 item.sellItem(numberOfItems);
+                CandyStoreItem soldItem = item.clone();
                 this.candyStoreItemInventory.put(item.getId(), item);
                 this.currentCustomerBalance -= totalPrice;
-                this.cart.add(item);
+
+                this.cart.add(soldItem);
             }
         }
     }
@@ -167,16 +179,33 @@ public class CandyStore {
     // Clears cart at end
     // Resets customer balance
     // Sends return to printReceipt
-    public List<CandyStoreItem> completeSale(){
-        List<CandyStoreItem> itemsSold = this.cart;
+    public List<CandyStoreItem> buildReceiptAndEmptyCart(){
+        List<CandyStoreItem> itemsSold = getCart();
+        clearCart();
         return itemsSold;
     }
 
-    public double calculateTotalSalePrice(){
-        return 0;
+    public List<CandyStoreItem> getCart(){
+        return this.cart;
     }
 
-    public double calculateChange(){
-        return currentCustomerBalance - calculateTotalSalePrice();
+    public double calculateTotalSalePrice(){
+        double totalPrice = 0;
+        for (CandyStoreItem item : this.cart){
+            totalPrice += item.getPrice() * item.getQuantity();
+        }
+        return totalPrice;
     }
+
+    public double calculateChangeAmount(){
+        return currentCustomerBalance;
+    }
+
+    public Map<Integer, String> calculateChangeBillsAndCoins(){
+        double changeToGive = calculateChangeAmount();
+        Map<Integer, String> billsAndCoins = new LinkedHashMap<Integer, String>();
+
+        return billsAndCoins;
+    }
+
 }

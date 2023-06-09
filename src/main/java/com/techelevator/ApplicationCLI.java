@@ -72,7 +72,7 @@ public class ApplicationCLI {
 						// select products/add to cart
 						menu.addItemToCart(store);
 					} else if (subMenuChoice.equals("3")){
-						// complete sale
+						menu.completeSale(store);
 						System.out.println("Returning to main menu.");
 						break;
 					}
