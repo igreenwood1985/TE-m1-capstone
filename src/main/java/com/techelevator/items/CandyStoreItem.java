@@ -55,6 +55,11 @@ public abstract class CandyStoreItem {
     public void sellItem(int amountSold) {
         this.quantity -= amountSold;
     }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     // Could override the toString method, but that seems... wrong.
     // Should do all our formatting with printf, or none of it.
 //    @Override

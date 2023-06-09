@@ -162,4 +162,21 @@ public class CandyStore {
     public void clearCart(){
         this.cart = new ArrayList<>();
     }
+
+
+    // Clears cart at end
+    // Resets customer balance
+    // Sends return to printReceipt
+    public List<CandyStoreItem> completeSale(){
+        List<CandyStoreItem> itemsSold = this.cart;
+        return itemsSold;
+    }
+
+    public double calculateTotalSalePrice(){
+        return 0;
+    }
+
+    public double calculateChange(){
+        return currentCustomerBalance - calculateTotalSalePrice();
+    }
 }

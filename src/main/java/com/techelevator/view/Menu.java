@@ -123,7 +123,8 @@ public class Menu {
 	public void addItemToCart(CandyStore store) {
 		printInventory(store);
 		System.out.println("Enter the ID of the Item you would like to purchase: ");
-		String itemId = getUserCommand();
+		String itemId = getUserCommand().toUpperCase();
+
 		System.out.println("Enter the number of items you would like to purchase: ");
 		int itemAmount = 0;
 		try {
@@ -139,5 +140,9 @@ public class Menu {
 			e = null;
 			return;
 		}
+	}
+
+	public void printReceipt(List<CandyStoreItem> cart){
+
 	}
 }
