@@ -111,11 +111,7 @@ public class Menu {
 			THE DOCUMENTATION IS LIKE EIGHT MILES LONG
 			I OPENED IT IT ONCE, AND BOSS MUSIC STARTED PLAYING
 			 */
-
-
 			System.out.printf("%-10s %-20s %-10s %-10s $%1.2f \n",id, name, wrapper, qty, item.getPrice());
-
-
 		}
 		System.out.println("");
 	}
