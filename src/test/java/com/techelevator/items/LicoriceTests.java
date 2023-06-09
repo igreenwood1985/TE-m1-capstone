@@ -9,7 +9,7 @@ public class LicoriceTests {
     private Licorice target;
     @Before
     public void setup() {
-        this.target = new Licorice("LI","ValidTestLicorice", 10.0, false);
+        this.target = new Licorice("LI","ValidTestLicorice", 10.0, false, "Licorice and Jellies");
     }
 
     @Test

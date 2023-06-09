@@ -1,5 +1,7 @@
 package com.techelevator.items;
 
+import com.techelevator.CandyStore;
+
 /*
     This represents a single catering item in the system
 
@@ -34,6 +36,15 @@ public abstract class CandyStoreItem {
             this.type = type;
         }
     }
+
+    public CandyStoreItem(CandyStoreItem itemToClone){
+        this.id = itemToClone.getId();
+        this.name = itemToClone.getName();
+        this.type = itemToClone.getType();
+        this.quantity = itemToClone.getQuantity();
+        this.isIndividuallyWrapped = itemToClone.isIndividuallyWrapped();
+    }
+
 
     public String getId() {
         return id;

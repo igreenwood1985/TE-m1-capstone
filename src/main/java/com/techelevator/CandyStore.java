@@ -162,11 +162,11 @@ public class CandyStore {
                 throw new IllegalArgumentException("Insufficient funds.");
             } else {
                 item.sellItem(numberOfItems);
-                CandyStoreItem soldItem = item.clone();
+                //CandyStoreItem soldItem = item.clone();
                 this.candyStoreItemInventory.put(item.getId(), item);
                 this.currentCustomerBalance -= totalPrice;
 
-                this.cart.add(soldItem);
+                //this.cart.add(soldItem);
             }
         }
     }
