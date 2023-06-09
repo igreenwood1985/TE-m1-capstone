@@ -9,7 +9,7 @@ public class ChocolateTests {
 
     @Before
     public void setup() {
-        this.target = new Chocolate("CH","ValidTestChocolate", 10.0, true);
+        this.target = new Chocolate("CH","ValidTestChocolate", 10.0, true, "Chocolate Confectionery");
     }
 
     @Test

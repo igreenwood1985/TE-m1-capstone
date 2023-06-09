@@ -67,6 +67,17 @@ public abstract class CandyStoreItem {
     }
 
 
+    public CandyStoreItem(CandyStoreItem candyItem){
+        this.id = candyItem.getId();
+        this.name = candyItem.getName();
+        this.isIndividuallyWrapped = candyItem.isIndividuallyWrapped();
+        this.quantity = candyItem.getQuantity();
+        this.price = candyItem.getPrice();
+        this.type = candyItem.getType();
+    }
+
+
+
 
     // Could override the toString method, but that seems... wrong.
     // Should do all our formatting with printf, or none of it.

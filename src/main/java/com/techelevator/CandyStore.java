@@ -162,10 +162,10 @@ public class CandyStore {
                 throw new IllegalArgumentException("Insufficient funds.");
             } else {
                 item.sellItem(numberOfItems);
-                CandyStoreItem soldItem = item.clone();
+                CandyStoreItem soldItem = buildItem(item);
                 this.candyStoreItemInventory.put(item.getId(), item);
                 this.currentCustomerBalance -= totalPrice;
-
+                soldItem.setQuantity(numberOfItems);
                 this.cart.add(soldItem);
             }
         }
@@ -206,6 +206,27 @@ public class CandyStore {
         Map<Integer, String> billsAndCoins = new LinkedHashMap<Integer, String>();
 
         return billsAndCoins;
+    }
+
+    public CandyStoreItem buildItem(CandyStoreItem item){
+        CandyStoreItem newItem = null;
+
+        String type = item.getType();
+
+
+
+        if (type.equals(CHOCOLATE_TYPE_STRING)) {
+            newItem = new Chocolate((Chocolate) item);
+        } else if (type.equals(SOUR_TYPE_STRING)) {
+            newItem = new Sour((Sour) item);
+        } else if (type.equals(HARD_CANDY_TYPE_STRING)) {
+            newItem = new HardCandy((HardCandy) item);
+        } else if (type.equals(LICORICE_TYPE_STRING)) {
+            newItem = new Licorice((Licorice) item);
+        }
+
+        return newItem;
+
     }
 
 }

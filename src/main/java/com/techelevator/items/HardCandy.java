@@ -5,4 +5,8 @@ public class HardCandy extends CandyStoreItem {
         super(iD, name, price, isIndividuallyWrapped, type);
 
     }
+
+    public HardCandy(HardCandy hardCandy){
+        super(hardCandy);
+    }
 }

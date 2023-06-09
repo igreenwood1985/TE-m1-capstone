@@ -5,4 +5,8 @@ public class Sour extends CandyStoreItem {
         super(iD, name, price, isIndividuallyWrapped, type);
     }
 
+    public Sour(Sour sour){
+        super(sour);
+    }
+
 }
