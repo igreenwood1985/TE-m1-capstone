@@ -51,6 +51,10 @@ public abstract class CandyStoreItem {
     public boolean isIndividuallyWrapped() {
         return isIndividuallyWrapped;
     }
+
+    public void sellItem(int amountSold) {
+        this.quantity -= amountSold;
+    }
     // Could override the toString method, but that seems... wrong.
     // Should do all our formatting with printf, or none of it.
 //    @Override

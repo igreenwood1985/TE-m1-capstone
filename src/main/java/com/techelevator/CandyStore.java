@@ -26,6 +26,8 @@ public class CandyStore {
     private static final int VALID_LINE_DELIM_COUNT = 4;
     private Map<String, CandyStoreItem> candyStoreItemInventory = new TreeMap<String, CandyStoreItem>();
 
+    private List<CandyStoreItem> cart = new ArrayList<CandyStoreItem>();
+
     public Map<String, CandyStoreItem> getCandyStoreItemInventory() {
         return candyStoreItemInventory;
     }
@@ -127,5 +129,33 @@ public class CandyStore {
         else {
             this.currentCustomerBalance += dollarsToAdd;
         }
+    }
+
+
+    public void updateCart(String itemToPurchase, int numberOfItems){
+        CandyStoreItem item = this.candyStoreItemInventory.get(itemToPurchase);
+        if (item == null ) {
+            throw new IllegalArgumentException("Item does not exist, try again. \n");
+        } else if(item.getQuantity() == 0){
+            throw new IllegalArgumentException("Product sold out, do you wish to purchase another product? \n");
+        } else if(numberOfItems > item.getQuantity()){
+            throw new IllegalArgumentException("Insufficient Stock, try again. \n");
+        } else if (numberOfItems < 0){
+            throw new IllegalArgumentException("Please enter a positive number. \n");
+        } else {
+            double totalPrice = numberOfItems * item.getPrice();
+            if (totalPrice > currentCustomerBalance){
+                throw new IllegalArgumentException("Insufficient funds.");
+            } else {
+                item.sellItem(numberOfItems);
+                this.candyStoreItemInventory.put(item.getId(), item);
+                this.currentCustomerBalance -= totalPrice;
+                this.cart.add(item);
+            }
+        }
+    }
+
+    public void clearCart(){
+        this.cart = new ArrayList<>();
     }
 }

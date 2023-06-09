@@ -70,6 +70,7 @@ public class ApplicationCLI {
 						menu.getAmountOfMoneyToAdd(store);
 					} else if (subMenuChoice.equals("2")) {
 						// select products/add to cart
+						menu.addItemToCart(store);
 					} else if (subMenuChoice.equals("3")){
 						// complete sale
 						System.out.println("Returning to main menu.");

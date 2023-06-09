@@ -98,4 +98,25 @@ public class Menu {
 		}
 		System.out.println("");
 	}
+
+	public void addItemToCart(CandyStore store) {
+		printInventory(store);
+		System.out.println("Enter the ID of the Item you would like to purchase: ");
+		String itemId = getUserCommand();
+		System.out.println("Enter the number of items you would like to purchase: ");
+		int itemAmount = 0;
+		try {
+			itemAmount = Integer.parseInt(getUserCommand());
+		} catch (NumberFormatException n){
+			System.out.println("Enter a whole number.");
+			return;
+		}
+		try {
+			store.updateCart(itemId, itemAmount);
+		} catch (IllegalArgumentException e){
+			System.out.println(e.getMessage());
+			e = null;
+			return;
+		}
+	}
 }
