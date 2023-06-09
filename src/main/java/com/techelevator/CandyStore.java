@@ -3,6 +3,7 @@ package com.techelevator;
 import com.techelevator.filereader.InventoryFileReader;
 import com.techelevator.items.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -11,13 +12,13 @@ import java.util.*;
     contain all the "work"
  */
 public class CandyStore {
-    private static final double NICKEL = .05;
-    private static final double DIME = .10;
-    private static final double QUARTER = .25;
-    private static final double ONE = 1.0;
-    private static final double FIVE = 5.0;
-    private static final double TEN = 10.0;
-    private static final double TWENTY = 20.0;
+    private static final int NICKEL = 5;
+    private static final int DIME = 10;
+    private static final int QUARTER = 25;
+    private static final int ONE = 100;
+    private static final int FIVE = 500;
+    private static final int TEN = 1000;
+    private static final int TWENTY = 2000;
     private static final String CHOCOLATE_CODE = "CH";
     private static final String CHOCOLATE_TYPE_STRING = "Chocolate Confectionery";
     private static final String SOUR_CODE = "SR";
@@ -27,6 +28,10 @@ public class CandyStore {
     private static final String LICORICE_CODE = "LI";
     private static final String LICORICE_TYPE_STRING = "Licorice and Jellies";
     private double currentCustomerBalance = 0.0;
+
+    public void resetBalance(){
+        this.currentCustomerBalance = 0.0;
+    }
     /*
     BRJ - 6/8, POST 5PM:
     This constant represents the number of delimiter characters (pipes) that are found in a valid inventory file item line.
@@ -126,16 +131,13 @@ public class CandyStore {
         //return candyListMap;
     }
 
-    public void addMoneyToCustomerBalance(int dollarsToAdd) throws IllegalArgumentException {
+    public void addMoneyToCustomerBalance(int dollarsToAdd) {
         if (dollarsToAdd + currentCustomerBalance > 1000){
-           IllegalArgumentException overBalance = new IllegalArgumentException("Balance may not exceed $1000, try again. \n");
-            throw overBalance;
+           throw new IllegalArgumentException("Balance may not exceed $1000, try again. \n");
         } else if ( dollarsToAdd > 100){
-            IllegalArgumentException overAddLimit = new IllegalArgumentException("Only 100 dollars may be added at a time. Try again. \n");
-            throw overAddLimit;
+             throw new IllegalArgumentException("Only 100 dollars may be added at a time. Try again. \n");
         } else if ( dollarsToAdd < 0 ) {
-            IllegalArgumentException negativeAddAmount = new IllegalArgumentException("Enter a positive number. \n");
-            throw negativeAddAmount;
+            throw new IllegalArgumentException("Enter a positive number. \n");
         }
         else {
             this.currentCustomerBalance += dollarsToAdd;
@@ -162,11 +164,11 @@ public class CandyStore {
                 throw new IllegalArgumentException("Insufficient funds.");
             } else {
                 item.sellItem(numberOfItems);
-                //CandyStoreItem soldItem = item.clone();
+                CandyStoreItem soldItem = buildItem(item);
                 this.candyStoreItemInventory.put(item.getId(), item);
                 this.currentCustomerBalance -= totalPrice;
-
-                //this.cart.add(soldItem);
+                soldItem.setQuantity(numberOfItems);
+                this.cart.add(soldItem);
             }
         }
     }
@@ -179,10 +181,9 @@ public class CandyStore {
     // Clears cart at end
     // Resets customer balance
     // Sends return to printReceipt
-    public List<CandyStoreItem> buildReceiptAndEmptyCart(){
-        List<CandyStoreItem> itemsSold = getCart();
+    public void emptyCartResetBalance(){
         clearCart();
-        return itemsSold;
+        resetBalance();
     }
 
     public List<CandyStoreItem> getCart(){
@@ -198,14 +199,111 @@ public class CandyStore {
     }
 
     public double calculateChangeAmount(){
+
         return currentCustomerBalance;
     }
 
-    public Map<Integer, String> calculateChangeBillsAndCoins(){
+    public Map<String, Integer> calculateChangeBillsAndCoins(){
         double changeToGive = calculateChangeAmount();
-        Map<Integer, String> billsAndCoins = new LinkedHashMap<Integer, String>();
+        // Let's split this at the decimal point so we only have to deal with integers. Multiply by 100.
+        int changeInteger = ((int)Math.round((changeToGive * 100)));
+        //changeInteger += 1;
+        int twentyCount = 0;
+        int tenCount = 0;
+        int fiveCount = 0;
+        int oneCount = 0;
+        int quarterCount = 0;
+        int dimeCount = 0;
+        int nickelCount = 0;
 
+        // instantiate a map to put the count of our units next to the units.
+        Map<String, Integer> billsAndCoins = new LinkedHashMap<String, Integer>();
+
+        // Integer division should be able to give us the number we're looking for.
+        if (changeInteger >= TWENTY){
+            // figure out how many twenties to give back
+            twentyCount = changeInteger / TWENTY;
+            changeInteger = changeInteger % TWENTY;
+            if (twentyCount > 1){
+                billsAndCoins.put("Twenties", twentyCount);
+            } else {
+                billsAndCoins.put("Twenty", twentyCount);
+            }
+        }
+        if (changeInteger >= TEN){
+            tenCount = changeInteger / TEN;
+            changeInteger = changeInteger % TEN;
+            if (tenCount > 1){
+                billsAndCoins.put("Tens", tenCount);
+            } else {
+                billsAndCoins.put("Ten", tenCount);
+            }
+        }
+        if (changeInteger >= FIVE){
+            fiveCount = changeInteger / FIVE;
+            changeInteger = changeInteger % FIVE;
+            if (fiveCount > 1){
+                billsAndCoins.put("Fives", fiveCount);
+            } else {
+                billsAndCoins.put("Five", fiveCount);
+            }
+        }
+        if (changeInteger >= ONE){
+            oneCount = changeInteger / ONE;
+            changeInteger = changeInteger % ONE;
+            if (oneCount > 1){
+                billsAndCoins.put("Ones", oneCount);
+            } else {
+                billsAndCoins.put("One", oneCount);
+            }
+        }
+        if (changeInteger >= QUARTER){
+            quarterCount = changeInteger / QUARTER;
+            changeInteger = changeInteger % QUARTER;
+            if(quarterCount > 1){
+                billsAndCoins.put("Quarters", quarterCount);
+            } else {
+                billsAndCoins.put("Quarter", quarterCount);
+            }
+        }
+        if (changeInteger >= DIME){
+            dimeCount = changeInteger / DIME;
+            changeInteger = changeInteger % DIME;
+            if (dimeCount > 1){
+                billsAndCoins.put("Dimes", dimeCount);
+            } else {
+                billsAndCoins.put("Dime", dimeCount);
+            }
+        }
+        if (changeInteger >= NICKEL ){
+            nickelCount = changeInteger / NICKEL;
+            changeInteger = changeInteger % NICKEL;
+            if (nickelCount > 1){
+                billsAndCoins.put("Nickels", nickelCount);
+            } else {
+                billsAndCoins.put("Nickel", nickelCount );
+            }
+        }
         return billsAndCoins;
+    }
+
+    public CandyStoreItem buildItem(CandyStoreItem item){
+        CandyStoreItem newItem = null;
+
+        String type = item.getType();
+
+        if (type.equals(CHOCOLATE_TYPE_STRING)) {
+            newItem = new Chocolate((Chocolate) item);
+        } else if (type.equals(SOUR_TYPE_STRING)) {
+            newItem = new Sour((Sour) item);
+        } else if (type.equals(HARD_CANDY_TYPE_STRING)) {
+            newItem = new HardCandy((HardCandy) item);
+        } else if (type.equals(LICORICE_TYPE_STRING)) {
+            newItem = new Licorice((Licorice) item);
+        }
+
+        return newItem;
+
     }
 
 }

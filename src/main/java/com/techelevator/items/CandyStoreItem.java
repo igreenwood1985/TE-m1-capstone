@@ -37,14 +37,6 @@ public abstract class CandyStoreItem {
         }
     }
 
-    public CandyStoreItem(CandyStoreItem itemToClone){
-        this.id = itemToClone.getId();
-        this.name = itemToClone.getName();
-        this.type = itemToClone.getType();
-        this.quantity = itemToClone.getQuantity();
-        this.isIndividuallyWrapped = itemToClone.isIndividuallyWrapped();
-    }
-
 
     public String getId() {
         return id;
@@ -76,6 +68,17 @@ public abstract class CandyStoreItem {
     public String getType() {
         return type;
     }
+
+
+    public CandyStoreItem(CandyStoreItem candyItem){
+        this.id = candyItem.getId();
+        this.name = candyItem.getName();
+        this.isIndividuallyWrapped = candyItem.isIndividuallyWrapped();
+        this.quantity = candyItem.getQuantity();
+        this.price = candyItem.getPrice();
+        this.type = candyItem.getType();
+    }
+
 
 
 

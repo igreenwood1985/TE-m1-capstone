@@ -122,7 +122,10 @@ public class Menu {
 		printInventory(store);
 		System.out.println("Enter the ID of the Item you would like to purchase: ");
 		String itemId = getUserCommand().toUpperCase();
-
+		if (store.getCandyStoreItemInventory().get(itemId) == null){
+			System.out.println("Item doesn't exist, try again.");
+			return;
+		}
 		System.out.println("Enter the number of items you would like to purchase: ");
 		int itemAmount = 0;
 		try {
@@ -134,14 +137,15 @@ public class Menu {
 		}
 		try {
 			store.updateCart(itemId, itemAmount);
-		} catch (IllegalArgumentException e){
-			System.out.println(e.getMessage());
-			e = null;
-			return;
+		} catch (IllegalArgumentException f){
+			System.out.println(f.getMessage());
+			f = null;
+			//return;
 		}
 	}
 
 	public void completeSale(CandyStore store){
+		System.out.println("");
 		List<CandyStoreItem> cart = store.getCart();
 		for (CandyStoreItem purchasedItem : cart){
 			String qty = String.valueOf(purchasedItem.getQuantity());
@@ -149,11 +153,31 @@ public class Menu {
 			String type = purchasedItem.getType();
 			double individualPricePerUnit = purchasedItem.getPrice();
 			double totalPricePerUnit = purchasedItem.getQuantity() * purchasedItem.getPrice();
-			System.out.printf("%-5s %-20s %-10s $%1.2f $%1.2f \n", qty, name, type,  individualPricePerUnit, totalPricePerUnit, totalPricePerUnit);
+			System.out.printf("%-5s %-10s %-15s %5s $%1.2f $%1.2f \n", qty, name, type, " ",  individualPricePerUnit, totalPricePerUnit, totalPricePerUnit);
 		}
+		System.out.println("");
 		System.out.printf("Total: $%1.2f \n", store.calculateTotalSalePrice());
+		System.out.println("");
 		System.out.printf("Change: $%1.2f \n", store.calculateChangeAmount());
-
-
+		// For each entry in the bills and coins map, we need to print "(key) value, "
+		// Until we get to the last pair. Then we don't put a comma after the value.
+		System.out.println("");
+		if(store.calculateChangeBillsAndCoins().size() == 0) {
+			// DO NOTHING - our head explodes if we try to loop over an empty thing.
+		} else {
+			int i = 0;
+			int mapSize = store.calculateChangeBillsAndCoins().size();
+			for (Map.Entry<String, Integer> entry : store.calculateChangeBillsAndCoins().entrySet()) {
+				if (i < mapSize - 1) {
+					System.out.printf("(%s) %s, ", entry.getValue(), entry.getKey());
+				} else {
+					System.out.printf("(%s) %s", entry.getValue(), entry.getKey());
+				}
+				i++;
+			}
+		}
+		System.out.println("");
+		System.out.println("");
+		store.emptyCartResetBalance();
 	}
 }
