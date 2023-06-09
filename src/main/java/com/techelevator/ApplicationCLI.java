@@ -62,7 +62,20 @@ public class ApplicationCLI {
 				THEN go to the make sale menu
 				*/
 			else if(userChoice.equals("2")){
-				// Show Make Sale Menu Code
+
+				while (true) {
+					menu.showMakeSaleMenu(store);
+					String subMenuChoice = menu.getUserCommand();
+					if (subMenuChoice.equals("1")){
+						menu.getAmountOfMoneyToAdd(store);
+					} else if (subMenuChoice.equals("2")) {
+						// select products/add to cart
+					} else if (subMenuChoice.equals("3")){
+						// complete sale
+						System.out.println("Returning to main menu.");
+						break;
+					}
+				}
 			}
 			/*
 			ELSE IF the User's Choice is Quit

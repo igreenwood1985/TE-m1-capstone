@@ -15,6 +15,7 @@ public class CandyStore {
     private static final String SOUR_CODE = "SR";
     private static final String HARD_CANDY_CODE = "HC";
     private static final String LICORICE_CODE = "LI";
+    private double currentCustomerBalance = 0.0;
     /*
     BRJ - 6/8, POST 5PM:
     This constant represents the number of delimiter characters (pipes) that are found in a valid inventory file item line.
@@ -27,6 +28,10 @@ public class CandyStore {
 
     public Map<String, CandyStoreItem> getCandyStoreItemInventory() {
         return candyStoreItemInventory;
+    }
+
+    public double getCurrentCustomerBalance(){
+        return this.currentCustomerBalance;
     }
 
 
@@ -95,9 +100,6 @@ public class CandyStore {
     // BRJ - 6/8, POST 5PM:
     // Refactored this method to be the setter for our store's inventory property, which we call from the CandyStore constructor; which gets called from the main method when the user fires up our application.
     // Instead of returning the inventory map, we're now trying to
-    //
-    //
-
     private void buildInventory (List<String> inventoryStrings) throws IllegalArgumentException {
         // changed this to a tree map to sort it.
         Map<String, CandyStoreItem> candyListMap = new TreeMap<>();
@@ -111,4 +113,19 @@ public class CandyStore {
         //return candyListMap;
     }
 
+    public void addMoneyToCustomerBalance(int dollarsToAdd) throws IllegalArgumentException {
+        if (dollarsToAdd + currentCustomerBalance > 1000){
+           IllegalArgumentException overBalance = new IllegalArgumentException("Balance may not exceed $1000, try again. \n");
+            throw overBalance;
+        } else if ( dollarsToAdd > 100){
+            IllegalArgumentException overAddLimit = new IllegalArgumentException("Only 100 dollars may be added at a time. Try again. \n");
+            throw overAddLimit;
+        } else if ( dollarsToAdd < 0 ) {
+            IllegalArgumentException negativeAddAmount = new IllegalArgumentException("Enter a positive number. \n");
+            throw negativeAddAmount;
+        }
+        else {
+            this.currentCustomerBalance += dollarsToAdd;
+        }
+    }
 }

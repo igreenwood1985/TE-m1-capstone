@@ -66,8 +66,7 @@ public class CandyStoreTests {
         Assert.assertFalse("isWrapped failed to parse", testLicorice.isIndividuallyWrapped());
         Assert.assertEquals("Quantity didn't default to 100", 100, testLicorice.getQuantity());
     }
-
-  //  @Test
+    //  @Test
 //    public void buildInventory_creates_valid_map() {
 //        List<String> inventoryStringList = new ArrayList<String>();
 //        inventoryStringList.add(makeChocolate);

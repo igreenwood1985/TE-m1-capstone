@@ -30,6 +30,13 @@ public class Menu {
 		System.out.println("(2) Make Sale");
 		System.out.println("(3) Quit");
 	}
+
+	public void showMakeSaleMenu(CandyStore store){
+		System.out.println("(1) Take Money");
+		System.out.println("(2) Select Products");
+		System.out.println("(3) Complete Sale");
+		System.out.printf("Current Customer Balance: $%1.2f \n", store.getCurrentCustomerBalance()); //getCustomerBalance());
+	}
 	public String getInventoryFilePath(){
 		 System.out.println("Please enter a file path.");
 		 String filePath = in.nextLine();
@@ -38,6 +45,30 @@ public class Menu {
 	public String getUserCommand(){
 		String userCommand = in.nextLine();
 		return userCommand;
+	}
+	public void getAmountOfMoneyToAdd(CandyStore store){
+		System.out.println("Enter an amount of money to add between 1 and 100.");
+		String amountString = getUserCommand();
+		int amountInteger = 0;
+		try {
+			amountInteger = Integer.parseInt(amountString);
+		} catch (NumberFormatException e1){
+			System.out.println("Enter the dollar amount as a whole number.");
+			return;
+		}
+		try {
+			store.addMoneyToCustomerBalance(amountInteger);
+		} catch (IllegalArgumentException e2){
+			System.out.println(e2.getMessage());
+			// For some reason, if we don't null out e2 after sending our message, we don't print subsequent exception messages.
+			e2 = null;
+
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e3){
+				System.out.println("Interrupted during pause! Quitting.");
+			}
+		}
 	}
 
 	public void printInventory(CandyStore store) {
