@@ -66,7 +66,7 @@ public class Menu {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e3){
-				System.out.println("Interrupted during pause! Quitting.");
+				System.out.println("Interrupted during pause! What the heck?! Quitting.");
 			}
 		}
 	}
@@ -91,7 +91,28 @@ public class Menu {
 			} else {
 				wrapper = "N";
 			}
-			// BRJ
+			/*
+			BRJ 6/8, POST 5PM:
+			As far as I'm concerned, printf is straight-up witchcraft.
+			I can tell you what it's doing, but I can't tell you how or why it works.
+			We're feeding our item information to printf as strings, and specifying padding values - that's what those %-10s's do.
+			The % sign tells printf, "put a variable value here."
+			The 's' tells printf, "we're giving you a string."
+			Strings can get padded - that's the -10, -20, and whatnot.
+			The padding values are what allow us to print the inventory in neat columns.
+			Where I get completely lost is trying to understand how the padding carries over for each string we print down the column.
+			Cuz like, to pad properly, we need to know how long each string is; relative to each string in the column.
+			And we're printing by row. So, like... what?!?!
+			Those string lengths aren't stored in any obvious data structure; so HOW DOES IT KNOW ABOUT THEM, DUDE!??!??!?!
+			IS IT SECRETLY SAVING EVERYTHING SOMEWHERE?
+			IS IT PADDING AGAINST SOME ABSOLUTE POSITION AND I'M JUST TOO DUMB TO UNDERSTAND GEOMETRY?
+			IS IT CONSULTING WITH DEMONS?!
+			I DON'T KNOW
+			THE DOCUMENTATION IS LIKE EIGHT MILES LONG
+			I OPENED IT IT ONCE, AND BOSS MUSIC STARTED PLAYING
+			 */
+
+
 			System.out.printf("%-10s %-20s %-10s %-10s $%1.2f \n",id, name, wrapper, qty, item.getPrice());
 
 

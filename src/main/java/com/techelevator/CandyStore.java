@@ -102,7 +102,7 @@ public class CandyStore {
     // BRJ - 6/8, POST 5PM:
     // Refactored this method to be the setter for our store's inventory property, which we call from the CandyStore constructor; which gets called from the main method when the user fires up our application.
     // Instead of returning the inventory map, we're now trying to
-    private void buildInventory (List<String> inventoryStrings) throws IllegalArgumentException {
+    public void buildInventory (List<String> inventoryStrings) throws IllegalArgumentException {
         // changed this to a tree map to sort it.
         Map<String, CandyStoreItem> candyListMap = new TreeMap<>();
         // parser method goes here. it'll build the map.
@@ -133,6 +133,10 @@ public class CandyStore {
 
 
     public void updateCart(String itemToPurchase, int numberOfItems){
+        if (itemToPurchase == null){
+            throw new IllegalArgumentException("Enter an ID.");
+        }
+
         CandyStoreItem item = this.candyStoreItemInventory.get(itemToPurchase);
         if (item == null ) {
             throw new IllegalArgumentException("Item does not exist, try again. \n");
