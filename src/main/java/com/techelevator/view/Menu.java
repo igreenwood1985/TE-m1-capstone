@@ -1,6 +1,9 @@
 package com.techelevator.view;
 
-import java.util.Scanner;
+import com.techelevator.CandyStore;
+import com.techelevator.items.CandyStoreItem;
+
+import java.util.*;
 
 /*
  * This is the only class that should have any usage of System.out or System.in
@@ -27,10 +30,41 @@ public class Menu {
 		System.out.println("(2) Make Sale");
 		System.out.println("(3) Quit");
 	}
-
+	public String getInventoryFilePath(){
+		 System.out.println("Please enter a file path.");
+		 String filePath = in.nextLine();
+		 return filePath;
+	}
 	public String getUserCommand(){
-		Scanner userInput = new Scanner(System.in);
-		String userCommand = userInput.nextLine();
+		String userCommand = in.nextLine();
 		return userCommand;
+	}
+
+	public void printInventory(CandyStore store) {
+		Map<String, CandyStoreItem> inventory = store.getCandyStoreItemInventory();
+//		System.out.printf("Id%n Name%n Wrapper%n Qty%n Price%n %n");
+		System.out.printf("%-10s %-20s %-10s %-10s %-10s \n", "Id", "Name", "Wrapper", "Qty" , "Price");
+		for (CandyStoreItem item : inventory.values()){
+			String id = item.getId();
+			String name = item.getName();
+			String wrapper = "";
+			String qty = "";
+			//String price = String.valueOf(item.getPrice());
+			if (item.getQuantity() == 0){
+				qty = "SOLD OUT";
+			} else {
+				qty = String.valueOf(item.getQuantity());
+			}
+			if (item.isIndividuallyWrapped()){
+				wrapper = "Y";
+			} else {
+				wrapper = "N";
+			}
+			// BRJ
+			System.out.printf("%-10s %-20s %-10s %-10s $%1.2f \n",id, name, wrapper, qty, item.getPrice());
+
+
+		}
+		System.out.println("");
 	}
 }

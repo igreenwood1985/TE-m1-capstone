@@ -51,5 +51,26 @@ public abstract class CandyStoreItem {
     public boolean isIndividuallyWrapped() {
         return isIndividuallyWrapped;
     }
+    // Could override the toString method, but that seems... wrong.
+    // Should do all our formatting with printf, or none of it.
+//    @Override
+//    public String toString(){
+//        String wrapper = "";
+//        String qty = "";
+//
+//        if(isIndividuallyWrapped){
+//            wrapper = "Y";
+//        } else {
+//            wrapper = "N";
+//        }
+//        if(quantity == 0){
+//            qty = "SOLD OUT";
+//        } else {
+//            qty =  this.price + "";
+//        }
+//
+//        return this.id + " " + this.name + " " + wrapper + " " +
+//    }
+
 
 }

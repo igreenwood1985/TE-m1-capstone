@@ -34,10 +34,13 @@ public class ApplicationCLI {
 	 * Your application starts here
 	 */
 	public void run() {
+		// BRJ - 6/8, POST 5PM:
+		// Creating the store before we do literally anything else.
+		String path = menu.getInventoryFilePath();
+		CandyStore store = new CandyStore(path);
+
 
 		menu.showWelcomeMessage();
-
-
 		while (true) {
 			/*
 			Display the Starting Menu and get the users choice.
@@ -51,7 +54,7 @@ public class ApplicationCLI {
 				THEN show the candy store items for sale
 				*/
 			if(userChoice.equals("1")) {
-				// Show Inventory Code
+				menu.printInventory(store);
 			}
 
 			/*

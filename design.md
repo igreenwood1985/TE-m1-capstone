@@ -12,7 +12,7 @@
 - String id;
 - String name;  
 - boolean isIndividuallyWrapped; 
-- int stockCount = 100; 
+- int quantity = 100; 
 - double price;
 
 - Constructor needs take values from our inventory input file.
