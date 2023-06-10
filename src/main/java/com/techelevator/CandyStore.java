@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import com.techelevator.filereader.LogFileWriter;
+
 /*
     This class should encapsulate all the functionality of the Candy Store application, meaning it should
     contain all the "work"
@@ -28,6 +30,8 @@ public class CandyStore {
     private static final String LICORICE_CODE = "LI";
     private static final String LICORICE_TYPE_STRING = "Licorice and Jellies";
     private double currentCustomerBalance = 0.0;
+
+    private LogFileWriter logFileUpdateWriter = new LogFileWriter();
 
     public void resetBalance(){
         this.currentCustomerBalance = 0.0;
@@ -166,11 +170,18 @@ public class CandyStore {
                 item.sellItem(numberOfItems);
                 CandyStoreItem soldItem = buildItem(item);
                 this.candyStoreItemInventory.put(item.getId(), item);
+                double initialCustomerBalance = this.currentCustomerBalance;
                 this.currentCustomerBalance -= totalPrice;
                 soldItem.setQuantity(numberOfItems);
                 this.cart.add(soldItem);
+
+                logFileUpdateWriter.writeLoggedActivity(
+                        numberOfItems + " " + item.getName() + " " + item.getId(),
+                        initialCustomerBalance, this.currentCustomerBalance);
             }
         }
+
+
     }
 
     public void clearCart(){

@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import com.techelevator.filereader.LogFileWriter;
 import com.techelevator.view.Menu;
 
 import java.util.Scanner;

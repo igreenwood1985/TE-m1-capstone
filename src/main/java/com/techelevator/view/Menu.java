@@ -5,6 +5,8 @@ import com.techelevator.items.CandyStoreItem;
 
 import java.util.*;
 
+import com.techelevator.filereader.LogFileWriter;
+
 /*
  * This is the only class that should have any usage of System.out or System.in
  *
@@ -16,6 +18,7 @@ import java.util.*;
 public class Menu {
 	
 	private static final Scanner in = new Scanner(System.in);
+	private LogFileWriter logFileUpdateWriter = new LogFileWriter();
 
 	public void showWelcomeMessage() {
 		System.out.println("***************************");
@@ -178,6 +181,9 @@ public class Menu {
 		}
 		System.out.println("");
 		System.out.println("");
+		logFileUpdateWriter.writeLoggedActivity("CHANGE GIVEN",
+				store.getCurrentCustomerBalance(), store.calculateChangeAmount());
+
 		store.emptyCartResetBalance();
 	}
 }
