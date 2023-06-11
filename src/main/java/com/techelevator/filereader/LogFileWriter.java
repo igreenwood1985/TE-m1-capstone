@@ -19,7 +19,7 @@ public class LogFileWriter {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
         String timestamp = timeNow.format(formatter);
 
-        String logEntry = String.format("%s %s: $%.2f $%.2f", timestamp, command,
+        String logEntry = String.format("%s %s $%.2f $%.2f", timestamp, command,
                 initialCustomerBalance, finalCustomerBalance);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE_PATHWAY, true))) {

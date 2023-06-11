@@ -2,6 +2,8 @@ package com.techelevator;
 
 import com.techelevator.items.CandyStoreItem;
 import com.techelevator.items.Chocolate;
+import com.techelevator.items.Sour;
+import com.techelevator.view.Menu;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
+import static java.awt.SystemColor.menu;
+
 public class CandyStoreTests {
     // Idk if this test class setup is legit, but whatever. No cases modify this data, so we don't need to create new data between cases.
     // for now, at least.
@@ -19,7 +25,7 @@ public class CandyStoreTests {
     private String makeHardCandy = "HC|H1|TestHardCandy|0.0|F";
     private String makeSour = "SR|S1|TestSour|0.0|T";
     private String makeLicorice = "LI|L1|TestLicorice|0.0|F";
-    private CandyStoreItem testChoc = target.parseCandyStoreItemFromInventoryString(makeChocolate);
+    private CandyStoreItem testChoc = new Chocolate("C1", "TestChoc", 1.0, true, "Chocolate Confectionery");
     private CandyStoreItem testHC = target.parseCandyStoreItemFromInventoryString(makeHardCandy);
     private CandyStoreItem testSour = target.parseCandyStoreItemFromInventoryString(makeSour);
     private CandyStoreItem testLicorice = target.parseCandyStoreItemFromInventoryString(makeLicorice);
@@ -124,6 +130,25 @@ public class CandyStoreTests {
     }
 
     @Test
+    public void updateCart_adds_correct_item_and_updates_inventory_quantity() {
+        CandyStore testStore = new CandyStore();
+        List<String> inventoryStringList = new ArrayList<String>();
+        inventoryStringList.add(makeChocolate);
+        inventoryStringList.add(makeLicorice);
+        inventoryStringList.add(makeHardCandy);
+        inventoryStringList.add(makeSour);
+
+        testStore.buildInventory(inventoryStringList);
+        testStore.buildInventory(inventoryStringList);
+        testStore.addMoneyToCustomerBalance(100);
+        testStore.updateCart("C1", 10);
+
+        Assert.assertEquals( "Cart count is off.",  10, testStore.getCart().get(0).getQuantity());
+        Assert.assertEquals("Inventory count is off.", 90, testStore.getCandyStoreItemInventory().get("C1").getQuantity());
+        Assert.assertEquals("Item in cart is of the wrong type.", "C1", testStore.getCart().get(0).getId());
+    }
+
+    @Test
     public void addMoney_does_not_allow_amounts_greater_than_100(){
         CandyStore testStore = new CandyStore();
         boolean threwException = false;
@@ -216,4 +241,15 @@ public class CandyStoreTests {
         Assert.assertEquals("Didn't set quantity correctly.", expectedValue.get("H1").getQuantity(), testStore.getCandyStoreItemInventory().get("H1").getQuantity());
         Assert.assertEquals("Didn't set price correctly.", expectedValue.get("S1").getPrice(), testStore.getCandyStoreItemInventory().get("S1").getPrice(), .009);
     }
+
+    @Test
+    public void completeSale_resets_customer_balance() {
+        CandyStore testStore = new CandyStore();
+        testStore.addMoneyToCustomerBalance(100);
+        Menu menu1 = new Menu();
+        menu1.completeSale(testStore);
+        Assert.assertEquals("Balance wasn't reset.", 0,  testStore.getCurrentCustomerBalance());
+    }
+
+
 }

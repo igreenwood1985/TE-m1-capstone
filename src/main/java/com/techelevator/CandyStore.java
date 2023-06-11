@@ -120,8 +120,7 @@ public class CandyStore {
         return inventoryStrings;
     }
     // BRJ - 6/8, POST 5PM:
-    // Refactored this method to be the setter for our store's inventory property, which we call from the CandyStore constructor; which gets called from the main method when the user fires up our application.
-    // Instead of returning the inventory map, we're now trying to
+    // Refactored this method to be the setter for our store's inventory property, which we call from the CandyStore constructor; which gets called from the main method when the user fires up our application
     public void buildInventory (List<String> inventoryStrings) throws IllegalArgumentException {
         // changed this to a tree map to sort it.
         Map<String, CandyStoreItem> candyListMap = new TreeMap<>();
@@ -232,7 +231,7 @@ public class CandyStore {
 
         // Integer division should be able to give us the number we're looking for.
         if (changeInteger >= TWENTY){
-            // figure out how many twenties to give back
+            // figure out how many twenties to give back, and so on
             twentyCount = changeInteger / TWENTY;
             changeInteger = changeInteger % TWENTY;
             if (twentyCount > 1){
@@ -312,9 +311,36 @@ public class CandyStore {
         } else if (type.equals(LICORICE_TYPE_STRING)) {
             newItem = new Licorice((Licorice) item);
         }
-
         return newItem;
 
     }
+    public List<String> getCartItemNames(){
+        List<String> itemNames = new ArrayList<String>();
+        for (CandyStoreItem item : getCart()){
+            itemNames.add(item.getName());
+        }
+        return itemNames;
+    }
+    public List<String> getCartItemTypes(){
+        List<String> itemTypes = new ArrayList<String>();
+        for (CandyStoreItem item : getCart()){
+            itemTypes.add(item.getType());
+        }
+        return itemTypes;
+    }
+
+
+
+    public int getLongestStringLength(List<String> strings){
+        int longestLength = 0;
+        for (String string : strings){
+            if (string.length() > longestLength){
+                longestLength = string.length();
+            }
+        }
+        return longestLength;
+    }
+
+
 
 }

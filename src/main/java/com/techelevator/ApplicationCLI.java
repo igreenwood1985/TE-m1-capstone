@@ -26,6 +26,7 @@ public class ApplicationCLI {
 	 * Remember every class and data structure is a data types and can be passed as arguments to methods or constructors.
 	 */
 	private Menu menu;
+	private LogFileWriter logFileWriter = new LogFileWriter();
 
 	public ApplicationCLI(Menu menu) {
 		this.menu = menu;
@@ -67,14 +68,24 @@ public class ApplicationCLI {
 				while (true) {
 					menu.showMakeSaleMenu(store);
 					String subMenuChoice = menu.getUserCommand();
+
 					if (subMenuChoice.equals("1")){
+
+						// get balance before addition
+						double balancePreUpdate = store.getCurrentCustomerBalance();
 						menu.getAmountOfMoneyToAdd(store);
+						logFileWriter.writeLoggedActivity("MONEY RECEIVED:", balancePreUpdate, store.getCurrentCustomerBalance());
+
 					} else if (subMenuChoice.equals("2")) {
-						// select products/add to cart
+						//double balancePreUpdate = store.getCurrentCustomerBalance();
 						menu.addItemToCart(store);
+
+
 					} else if (subMenuChoice.equals("3")){
+						double balancePreUpdate = store.getCurrentCustomerBalance();
 						menu.completeSale(store);
-						System.out.println("Returning to main menu.");
+						logFileWriter.writeLoggedActivity("CHANGE GIVEN:",balancePreUpdate, store.getCurrentCustomerBalance());
+						//System.out.println("Returning to main menu.");
 						break;
 					}
 				}

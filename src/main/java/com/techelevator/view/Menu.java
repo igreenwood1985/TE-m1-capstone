@@ -18,7 +18,7 @@ import com.techelevator.filereader.LogFileWriter;
 public class Menu {
 	
 	private static final Scanner in = new Scanner(System.in);
-	private LogFileWriter logFileUpdateWriter = new LogFileWriter();
+	private static final LogFileWriter logFileUpdateWriter = new LogFileWriter();
 
 	public void showWelcomeMessage() {
 		System.out.println("***************************");
@@ -150,13 +150,17 @@ public class Menu {
 	public void completeSale(CandyStore store){
 		System.out.println("");
 		List<CandyStoreItem> cart = store.getCart();
+		int namePadding = store.getLongestStringLength(store.getCartItemNames()) + 1;
+		int typePadding = store.getLongestStringLength(store.getCartItemTypes()) + 1;
+		String formattingString = "%-4s %-" + namePadding + "s %-" + typePadding + "s $%1.2f  $%1.2f \n";
+
 		for (CandyStoreItem purchasedItem : cart){
 			String qty = String.valueOf(purchasedItem.getQuantity());
 			String name = purchasedItem.getName();
 			String type = purchasedItem.getType();
 			double individualPricePerUnit = purchasedItem.getPrice();
 			double totalPricePerUnit = purchasedItem.getQuantity() * purchasedItem.getPrice();
-			System.out.printf("%-5s %-10s %-15s %5s $%1.2f $%1.2f \n", qty, name, type, " ",  individualPricePerUnit, totalPricePerUnit, totalPricePerUnit);
+			System.out.printf(formattingString, qty, name, type,  individualPricePerUnit, totalPricePerUnit, totalPricePerUnit);
 		}
 		System.out.println("");
 		System.out.printf("Total: $%1.2f \n", store.calculateTotalSalePrice());
@@ -164,7 +168,6 @@ public class Menu {
 		System.out.printf("Change: $%1.2f \n", store.calculateChangeAmount());
 		// For each entry in the bills and coins map, we need to print "(key) value, "
 		// Until we get to the last pair. Then we don't put a comma after the value.
-		System.out.println("");
 		if(store.calculateChangeBillsAndCoins().size() == 0) {
 			// DO NOTHING - our head explodes if we try to loop over an empty thing.
 		} else {
@@ -181,9 +184,6 @@ public class Menu {
 		}
 		System.out.println("");
 		System.out.println("");
-		logFileUpdateWriter.writeLoggedActivity("CHANGE GIVEN",
-				store.getCurrentCustomerBalance(), store.calculateChangeAmount());
-
 		store.emptyCartResetBalance();
 	}
 }
