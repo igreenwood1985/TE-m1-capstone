@@ -248,7 +248,7 @@ public class CandyStoreTests {
         testStore.addMoneyToCustomerBalance(100);
         Menu menu1 = new Menu();
         menu1.completeSale(testStore);
-        Assert.assertEquals("Balance wasn't reset.", 0,  testStore.getCurrentCustomerBalance());
+        Assert.assertEquals("Balance wasn't reset.", 0,  testStore.getCurrentCustomerBalance(),0.009);
     }
 
 
