@@ -23,6 +23,7 @@ public class LogFileWriter {
     // timeStamp instance variable declaration
     private String timeStamp;
 
+    //Getter for time stamp
     public String getTimeStamp() {
         return timeStamp = timeNow.format(formatter);
     }
